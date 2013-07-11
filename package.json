@@ -1,0 +1,43 @@
+{
+  "name": "grunt-smarten",
+  "description": "Preprocess text in html files replacing quotes, ellipses, and other characters with their encoded utf equivalent",
+  "version": "0.1.0",
+  "homepage": "https://github.com/nrub/grunt-smarten",
+  "author": {
+    "name": "Paul English",
+    "email": "paul@onfrst.com",
+    "url": "http://nrub.onfrst.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nrub/grunt-smarten.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nrub/grunt-smarten/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/nrub/grunt-smarten/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt": "~0.4.1"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.1"
+  },
+  "keywords": [
+    "gruntplugin"
+  ]
+}
