@@ -75,7 +75,7 @@ module.exports = function(grunt) {
             var text_node = $(element)
                 .contents()
                 .filter(function() {
-                    return this.nodeType == 3;
+                    return this.nodeType === 3;
                 })
                 .first();
             var smart_response = smarttext(text_node.text(), options);
@@ -88,8 +88,8 @@ module.exports = function(grunt) {
         });
 
         if (updated){
-            var updatedContents = window.document.doctype.toString()
-                    + window.document.innerHTML;
+            var updatedContents = window.document.doctype.toString() +
+                    window.document.innerHTML;
             grunt.file.write(dest || f, updatedContents);
             grunt.log.writeln('File ' + (dest || f).cyan + ' created/updated.');
         }
