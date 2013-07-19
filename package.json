@@ -39,7 +39,14 @@
   },
   "keywords": [
     "gruntplugin",
-    "grunt"
+    "grunt",
+    "quotes",
+    "singlequotes",
+    "doublequotes",
+    "ellipses",
+    "widows",
+    "smarten",
+    "emdash"
   ],
   "dependencies": {
     "jsdom": "~0.7.0"
