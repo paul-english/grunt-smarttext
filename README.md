@@ -37,47 +37,84 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.singles
+Type: `Boolean`
+Default value: `true`
 
-A string value that is used to do something with whatever.
+Should the parser replace single quotes with their smart equivalent
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+#### options.apostrophes
+Type: `Boolean`
+Default value: `true`
 
-A string value that is used to do something else with whatever else.
+Should the parser replace apostrophes with their smart equivalent
+
+#### options.doubles
+Type: `Boolean`
+Default value: `true`
+
+Should the parser replace double quotes with their smart equivalent
+
+#### options.emdashes
+Type: `Boolean`
+Default value: `true`
+
+Should the parser replace emdashes, `--`, with their smart equivalent
+
+#### options.ellipses
+Type: `Boolean`
+Default value: `true`
+
+Should the parser replace ellipses with their smart equivalent
+
+#### options.widows
+Type: `Boolean`
+Default value: `true`
+
+Should the parser prevent widows using a non-breaking space.
+
+#### options.custom_replacements
+Type: `Array of Arrays`
+Default value: `[]`
+
+Custom replacements that should be applied to your html text. Should be
+of the form `[/regex/g, 'replacement string']`.
 
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+By default all the replacements will run on your html files, with
+exception of custom replacements.
 
 ```js
 grunt.initConfig({
   smarttext: {
     options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
+    files: [{
+      'expand': true,
+      'cwd': 'test/fixtures',
+      'src': ['**/*.html'],
+      'dest': 'tmp'
+    }],
   },
 })
 ```
 
 #### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
 
 ```js
 grunt.initConfig({
   smarttext: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      ellipses: false,
+      widows: false,
     },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
+    files: [{
+      'expand': true,
+      'cwd': 'test/fixtures',
+      'src': ['**/*.html'],
+      'dest': 'tmp'
+    }],
   },
 })
 ```
@@ -86,4 +123,5 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+
+* `0.1.0` - Initial release. Able to replace singlequotes, doublequotes, apostrophes, emdashes, ellipses, custom replacers, and prevent widows.
