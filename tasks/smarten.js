@@ -1,6 +1,6 @@
 /*
- * grunt-smarten
- * https://github.com/nrub/grunt-smarten
+ * grunt-smarttext
+ * https://github.com/nrub/grunt-smarttext
  *
  * Copyright (c) 2013 Paul English
  * Licensed under the MIT license.
@@ -15,7 +15,7 @@ var jqueryContents = fs.readFileSync(path.join(__dirname,'../vendor/jquery-2.0.3
 
 module.exports = function(grunt) {
 
-    var smarten = function(str, options) {
+    var smarttext = function(str, options) {
         var updated = false;
 
         if (options.apostrophes) {
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
                     return this.nodeType == 3;
                 })
                 .first();
-            var smart_response = smarten(text_node.text(), options);
+            var smart_response = smarttext(text_node.text(), options);
             var text_updated = smart_response[0];
             var replacement_text = smart_response[1];
             if (!updated && text_updated) {
@@ -96,7 +96,7 @@ module.exports = function(grunt) {
 
     };
 
-    grunt.registerMultiTask('smarten', 'Replace quotes, em-dashes, and ellipses with UTF equivalents.', function() {
+    grunt.registerMultiTask('smarttext', 'Replace quotes, em-dashes, and ellipses with UTF equivalents.', function() {
 
         var done = this.async();
         var countdown = 0;

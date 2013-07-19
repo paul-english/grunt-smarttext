@@ -1,4 +1,4 @@
-# grunt-smarten
+# grunt-smarttext
 
 > Preprocess text in html files replacing quotes, ellipses, and other characters with their encoded utf equivalent
 
@@ -8,23 +8,23 @@ This plugin requires Grunt `~0.4.1`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-smarten --save-dev
+npm install grunt-smarttext --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-smarten');
+grunt.loadNpmTasks('grunt-smarttext');
 ```
 
-## The "smarten" task
+## The "smarttext" task
 
 ### Overview
-In your project's Gruntfile, add a section named `smarten` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `smarttext` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  smarten: {
+  smarttext: {
     options: {
       // Task-specific options go here.
     },
@@ -56,7 +56,7 @@ In this example, the default options are used to do something with whatever. So 
 
 ```js
 grunt.initConfig({
-  smarten: {
+  smarttext: {
     options: {},
     files: {
       'dest/default_options': ['src/testing', 'src/123'],
@@ -70,7 +70,7 @@ In this example, custom options are used to do something else with whatever else
 
 ```js
 grunt.initConfig({
-  smarten: {
+  smarttext: {
     options: {
       separator: ': ',
       punctuation: ' !!!',
