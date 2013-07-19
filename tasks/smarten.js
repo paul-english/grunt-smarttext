@@ -8,43 +8,138 @@
 
 'use strict';
 
+var fs = require('fs');
+var path = require('path');
+var jsdom = require('jsdom');
+var jqueryContents = fs.readFileSync(path.join(__dirname,'../vendor/jquery-2.0.3.min.js'));
+
 module.exports = function(grunt) {
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+    var smarten = function(str, options) {
+        var updated = false;
 
-  grunt.registerMultiTask('smarten', 'Your task description goes here.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
-    });
-
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
+        if (options.apostrophes) {
+            str = str.replace(/(\w)'(\w)/g, "$1’$2");
+            updated = true;
         }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
 
-      // Handle options.
-      src += options.punctuation;
+        if (options.singles) {
+            // opening singles
+            str = str.replace(/(^|[-\u2014\s(\["])'/g, "$1‘");
+            // closing singles
+            str = str.replace(/'([-\u2014\s)\]"]|$)/g, "’$1");
+            updated = true;
+        }
 
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
+        if (options.doubles) {
+            // opening doubles
+            str = str.replace(/(^|[-\u2014/\[(\u2018\s])"/g, "$1“");
+            // closing doubles
+            str = str.replace(/"/g, "”");
+            updated = true;
+        }
 
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
+        if (options.emdashes) {
+            str = str.replace(/--/g, "—");
+            updated = true;
+        }
+
+        if (options.ellipses) {
+            str = str.replace(/\.{3}/g, "…");
+            updated = true;
+        }
+
+        if (options.widows) {
+            str = str.replace(/\s(\S+\s*)$/,'&nbsp;$1');
+            updated = true;
+        }
+
+        if (options.custom_replacements.length > 0) {
+            for (var i = 0; i < options.custom_replacements.length; i++) {
+                var replacement = options.custom_replacements[i];
+                str = str.replace(replacement[0], replacement[1]);
+            }
+            updated = true;
+        }
+
+        return [updated, str];
+    };
+
+    var processFile = function(f,dest,options,$,window) {
+        grunt.log.subhead('Processing ' + f.cyan);
+        var updated = false;
+
+        var elements = $("*");
+        elements.each(function(index, element) {
+            // Only replace strings in DOM text nodes
+            var text_node = $(element)
+                .contents()
+                .filter(function() {
+                    return this.nodeType == 3;
+                })
+                .first();
+            var smart_response = smarten(text_node.text(), options);
+            var text_updated = smart_response[0];
+            var replacement_text = smart_response[1];
+            if (!updated && text_updated) {
+                updated = true;
+            }
+            text_node.replaceWith(replacement_text);
+        });
+
+        if (updated){
+            var updatedContents = window.document.doctype.toString()
+                    + window.document.innerHTML;
+            grunt.file.write(dest || f, updatedContents);
+            grunt.log.writeln('File ' + (dest || f).cyan + ' created/updated.');
+        }
+
+    };
+
+    grunt.registerMultiTask('smarten', 'Replace quotes, em-dashes, and ellipses with UTF equivalents.', function() {
+
+        var done = this.async();
+        var countdown = 0;
+
+        // Merge task-specific and/or target-specific options with these defaults.
+        var options = this.options({
+            singles: true,
+            apostrophes: true,
+            doubles: true,
+            emdashes: true,
+            ellipses: true,
+            widows: true,
+            custom_replacements: []
+        });
+
+        // TODO only allow html files
+
+        // Iterate over all specified file groups.
+        this.files.forEach(function(f) {
+            var dest = f.dest;
+
+            f.src.filter(function(filepath) {
+                if (!grunt.file.exists(filepath)) {
+                    grunt.log.warn('Source file "' + filepath + '" not found.');
+                    return false;
+                } else {
+                    return true;
+                }
+            }).forEach(function(f) {
+                countdown++;
+                var srcContents = grunt.file.read(f);
+                jsdom.env({
+                    html: srcContents,
+                    src: [jqueryContents],
+                    done: function process(errors, window) {
+                        processFile(f,dest,options,window.$,window);
+                        countdown--;
+                        if (countdown === 0) {
+                            done();
+                        }
+                    }
+                });
+            });
+        });
     });
-  });
-
 };

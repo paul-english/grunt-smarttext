@@ -28,21 +28,99 @@ exports.smarten = {
     done();
   },
   default_options: function(test) {
-    test.expect(1);
+    test.expect(2);
 
-    var actual = grunt.file.read('tmp/default_options');
-    var expected = grunt.file.read('test/expected/default_options');
+    var actual = grunt.file.read('tmp/test-file-one.html');
+    var expected = grunt.file.read('test/expected/test-file-one.html');
+    test.equal(actual, expected, 'should describe what the default behavior is.');
+    actual = grunt.file.read('tmp/test-file-two.html');
+    expected = grunt.file.read('test/expected/test-file-two.html');
     test.equal(actual, expected, 'should describe what the default behavior is.');
 
     test.done();
   },
-  custom_options: function(test) {
-    test.expect(1);
+  custom_replacements: function(test) {
+    test.expect(2);
 
-    var actual = grunt.file.read('tmp/custom_options');
-    var expected = grunt.file.read('test/expected/custom_options');
+    var actual = grunt.file.read('tmp/custom/test-file-one.html');
+    var expected = grunt.file.read('test/expected/custom/test-file-one.html');
+    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+    actual = grunt.file.read('tmp/custom/test-file-two.html');
+    expected = grunt.file.read('test/expected/custom/test-file-two.html');
     test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
 
     test.done();
   },
+  only_singles: function(test) {
+    test.expect(2);
+
+    var actual = grunt.file.read('tmp/singles/test-file-one.html');
+    var expected = grunt.file.read('test/expected/singles/test-file-one.html');
+    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+    actual = grunt.file.read('tmp/singles/test-file-two.html');
+    expected = grunt.file.read('test/expected/singles/test-file-two.html');
+    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+
+    test.done();
+  },
+  only_apostrophes: function(test) {
+    test.expect(2);
+
+    var actual = grunt.file.read('tmp/apostrophes/test-file-one.html');
+    var expected = grunt.file.read('test/expected/apostrophes/test-file-one.html');
+    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+    actual = grunt.file.read('tmp/apostrophes/test-file-two.html');
+    expected = grunt.file.read('test/expected/apostrophes/test-file-two.html');
+    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+
+    test.done();
+  },
+  only_doubles: function(test) {
+    test.expect(2);
+
+    var actual = grunt.file.read('tmp/doubles/test-file-one.html');
+    var expected = grunt.file.read('test/expected/doubles/test-file-one.html');
+    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+    actual = grunt.file.read('tmp/doubles/test-file-two.html');
+    expected = grunt.file.read('test/expected/doubles/test-file-two.html');
+    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+
+    test.done();
+  },
+  only_emdashes: function(test) {
+    test.expect(2);
+
+    var actual = grunt.file.read('tmp/emdashes/test-file-one.html');
+    var expected = grunt.file.read('test/expected/emdashes/test-file-one.html');
+    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+    actual = grunt.file.read('tmp/emdashes/test-file-two.html');
+    expected = grunt.file.read('test/expected/emdashes/test-file-two.html');
+    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+
+    test.done();
+  },
+  only_ellipses: function(test) {
+    test.expect(2);
+
+    var actual = grunt.file.read('tmp/ellipses/test-file-one.html');
+    var expected = grunt.file.read('test/expected/ellipses/test-file-one.html');
+    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+    actual = grunt.file.read('tmp/ellipses/test-file-two.html');
+    expected = grunt.file.read('test/expected/ellipses/test-file-two.html');
+    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+
+    test.done();
+  },
+  only_widows: function(test) {
+    test.expect(2);
+
+    var actual = grunt.file.read('tmp/widows/test-file-one.html');
+    var expected = grunt.file.read('test/expected/widows/test-file-one.html');
+    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+    actual = grunt.file.read('tmp/widows/test-file-two.html');
+    expected = grunt.file.read('test/expected/widows/test-file-two.html');
+    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+
+    test.done();
+  }
 };
