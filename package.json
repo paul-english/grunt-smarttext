@@ -1,7 +1,7 @@
 {
   "name": "grunt-smarttext",
   "description": "Preprocess text in html files replacing quotes, ellipses, and other characters with their encoded utf equivalent",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/nrub/grunt-smarttext",
   "author": {
     "name": "Paul English",
