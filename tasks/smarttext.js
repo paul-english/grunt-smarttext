@@ -69,7 +69,7 @@ module.exports = function(grunt) {
         grunt.log.subhead('Processing ' + f.cyan);
         var updated = false;
 
-        var elements = $("*");
+        var elements = $("*:not(script,style,pre,code)");
         elements.each(function(index, element) {
             // Only replace strings in DOM text nodes
             var text_node = $(element)
