@@ -72,19 +72,21 @@ module.exports = function(grunt) {
         var elements = $("*:not(script,style,pre,code)");
         elements.each(function(index, element) {
             // Only replace strings in DOM text nodes
-            var text_node = $(element)
+            var text_nodes = $(element)
                 .contents()
                 .filter(function() {
                     return this.nodeType === 3;
-                })
-                .first();
-            var smart_response = smarttext(text_node.text(), options);
-            var text_updated = smart_response[0];
-            var replacement_text = smart_response[1];
-            if (!updated && text_updated) {
-                updated = true;
-            }
-            text_node.replaceWith(replacement_text);
+                });
+            text_nodes.each(function(index, node) {
+                var text_node = $(node);
+                var smart_response = smarttext(text_node.text(), options);
+                var text_updated = smart_response[0];
+                var replacement_text = smart_response[1];
+                if (!updated && text_updated) {
+                    updated = true;
+                }
+                text_node.replaceWith(replacement_text);
+            });
         });
 
         if (updated){
